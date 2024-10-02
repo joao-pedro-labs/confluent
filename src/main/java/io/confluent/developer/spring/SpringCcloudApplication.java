@@ -2,12 +2,15 @@ package io.confluent.developer.spring;
 
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -20,6 +23,11 @@ public class SpringCcloudApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCcloudApplication.class, args);
+	}
+
+	@Bean
+	NewTopic hobbit2() {
+		return TopicBuilder.name("hobbit2").partitions(12).replicas(3).build();
 	}
 
 }
